@@ -16,8 +16,11 @@ public class FootballPlayer {
     private String name;
     private int age;
     private double yearsExperience;
+    @ManyToOne
+    private FootballTeam footballTeam;
 
-    public FootballPlayer(){}
+    public FootballPlayer() {
+    }
 
     public Long getId() {
         return id;
@@ -49,6 +52,14 @@ public class FootballPlayer {
 
     public void setYearsExperience(double yearsExperience) {
         this.yearsExperience = yearsExperience;
+    }
+
+    public FootballTeam getFootballTeam() {
+        return footballTeam;
+    }
+
+    public void setFootballTeam(FootballTeam footballTeam) {
+        this.footballTeam = footballTeam;
     }
 
     @Override
