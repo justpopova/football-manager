@@ -6,6 +6,8 @@ public class FootballTeamResponseDto {
     private Long id;
     private String name;
     private List<Long> playersIds;
+    private Long bankAccountId;
+    private double commission;
 
     public Long getId() {
         return id;
@@ -29,5 +31,21 @@ public class FootballTeamResponseDto {
 
     public void setPlayersIds(List<Long> playersIds) {
         this.playersIds = playersIds;
+    }
+
+    public Long getBankAccountId() {
+        return bankAccountId;
+    }
+
+    public void setBankAccountId(Long bankAccountId) {
+        this.bankAccountId = bankAccountId;
+    }
+
+    public double getCommission() {
+        return commission;
+    }
+
+    public void setCommission(double commission) {
+        this.commission = commission;
     }
 }
