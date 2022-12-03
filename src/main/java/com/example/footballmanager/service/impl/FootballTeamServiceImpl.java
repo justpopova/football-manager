@@ -5,10 +5,12 @@ import com.example.footballmanager.repository.FootballTeamRepository;
 import com.example.footballmanager.service.FootballTeamService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class FootballTeamServiceImpl implements FootballTeamService {
 
-    private FootballTeamRepository footballTeamRepository;
+    private final FootballTeamRepository footballTeamRepository;
 
     public FootballTeamServiceImpl(FootballTeamRepository footballTeamRepository) {
         this.footballTeamRepository = footballTeamRepository;
@@ -32,5 +34,10 @@ public class FootballTeamServiceImpl implements FootballTeamService {
     @Override
     public void update(FootballTeam footballTeam) {
         footballTeamRepository.save(footballTeam);
+    }
+
+    @Override
+    public List<FootballTeam> getAll() {
+        return footballTeamRepository.findAll();
     }
 }

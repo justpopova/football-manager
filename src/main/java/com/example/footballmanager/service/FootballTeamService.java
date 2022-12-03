@@ -2,6 +2,8 @@ package com.example.footballmanager.service;
 
 import com.example.footballmanager.model.FootballTeam;
 
+import java.util.List;
+
 public interface FootballTeamService {
     FootballTeam save(FootballTeam footballTeam);
 
@@ -10,4 +12,6 @@ public interface FootballTeamService {
     void delete(Long id);
 
     void update(FootballTeam footballTeam);
+
+    List<FootballTeam> getAll();
 }
