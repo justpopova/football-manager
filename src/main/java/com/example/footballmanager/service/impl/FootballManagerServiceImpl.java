@@ -15,6 +15,8 @@ public class FootballManagerServiceImpl implements FootballManagerService {
     private final BankAccountService bankAccountService;
     private final FootballTeamService footballTeamService;
     private final FootballPlayerService playerService;
+    private static final int YEAR_IN_MONTHS = 12;
+    private static final int BASE_PRICE = 100000;
 
     public FootballManagerServiceImpl(BankAccountService bankAccountService,
                                       FootballTeamService footballTeamService,
@@ -25,7 +27,9 @@ public class FootballManagerServiceImpl implements FootballManagerService {
     }
 
     @Override
-    public void transferPlayerToAnotherTeam(FootballPlayer player, Long transferToTeamId) {
+    public FootballPlayer transferPlayerToAnotherTeam(Long playerId, Long transferToTeamId) {
+        FootballPlayer player = playerService.getById(playerId);
+
         BankAccount sender = footballTeamService.getById(transferToTeamId).getBankAccount();
         BankAccount receiver = player.getFootballTeam().getBankAccount();
 
@@ -34,10 +38,11 @@ public class FootballManagerServiceImpl implements FootballManagerService {
 
         player.setFootballTeam(footballTeamService.getById(transferToTeamId));
         playerService.save(player);
+        return player;
     }
 
     private double countTransferExpenses(FootballPlayer player) {
-        double transferCost = (player.getYearsExperience() * 12) * 100000 / player.getAge();
+        double transferCost = (player.getYearsExperience() * YEAR_IN_MONTHS) * BASE_PRICE / player.getAge();
         double commissionPrice = transferCost * player.getFootballTeam().getCommission();
         return transferCost + commissionPrice;
     }
