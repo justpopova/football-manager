@@ -1,7 +1,7 @@
 package com.example.footballmanager.service;
 
+import com.example.footballmanager.dto.request.FootballTeamRequestDto;
 import com.example.footballmanager.model.FootballTeam;
-
 import java.util.List;
 
 public interface FootballTeamService {
@@ -11,7 +11,7 @@ public interface FootballTeamService {
 
     void delete(Long id);
 
-    void update(FootballTeam footballTeam);
+    FootballTeam update(Long id, FootballTeamRequestDto teamRequestDto);
 
     List<FootballTeam> getAll();
 }
