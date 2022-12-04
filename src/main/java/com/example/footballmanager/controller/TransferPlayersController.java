@@ -1,8 +1,8 @@
 package com.example.footballmanager.controller;
 
-import com.example.footballmanager.model.FootballPlayer;
+import com.example.footballmanager.dto.response.FootballPlayerResponseDto;
+import com.example.footballmanager.mapper.FootballPlayerDtoMapper;
 import com.example.footballmanager.service.FootballManagerService;
-import com.example.footballmanager.service.FootballPlayerService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,18 +13,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/players-transfer")
 public class TransferPlayersController {
     private final FootballManagerService managerService;
-    private final FootballPlayerService playerService;
+    private final FootballPlayerDtoMapper playerDtoMapper;
 
     public TransferPlayersController(FootballManagerService managerService,
-                                     FootballPlayerService playerService) {
+                                     FootballPlayerDtoMapper playerDtoMapper) {
         this.managerService = managerService;
-        this.playerService = playerService;
+        this.playerDtoMapper = playerDtoMapper;
     }
 
     @GetMapping("/{playerId}")
-    public void transferPLayer(@PathVariable  Long playerId,
-                               @RequestParam Long footballTeamId) {
-        FootballPlayer player = playerService.getById(playerId);
-        managerService.transferPlayerToAnotherTeam(player, footballTeamId);
+    public FootballPlayerResponseDto transferPLayer(@PathVariable Long playerId,
+                                                    @RequestParam Long footballTeamId) {
+        return playerDtoMapper.mapToDto(managerService.transferPlayerToAnotherTeam(playerId, footballTeamId));
     }
 }
