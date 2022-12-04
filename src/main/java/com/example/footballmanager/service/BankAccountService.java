@@ -1,7 +1,6 @@
 package com.example.footballmanager.service;
 
 import com.example.footballmanager.model.bankAccount.BankAccount;
-
 import java.math.BigDecimal;
 
 public interface BankAccountService {
@@ -10,4 +9,6 @@ public interface BankAccountService {
     void save(BankAccount bankAccount);
 
     BankAccount getById(Long id);
+
+    BankAccount createNewBankAccountForTeam();
 }

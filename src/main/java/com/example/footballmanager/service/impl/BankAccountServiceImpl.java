@@ -1,9 +1,11 @@
 package com.example.footballmanager.service.impl;
 
+import com.example.footballmanager.exception.FinancialTransactionException;
 import com.example.footballmanager.model.bankAccount.BankAccount;
 import com.example.footballmanager.repository.BankAccountRepository;
 import com.example.footballmanager.service.BankAccountService;
 import java.math.BigDecimal;
+import java.util.concurrent.ThreadLocalRandom;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,7 +22,8 @@ public class BankAccountServiceImpl implements BankAccountService {
     @Transactional
     public void transfer(BankAccount sender, BankAccount receiver, BigDecimal amount) {
         if (sender.getAmount().compareTo(amount) < 0) {
-            throw new RuntimeException("Not enough money!");
+            throw new FinancialTransactionException("Not enough money to make transaction. "
+                    + "\nYour balance: " + sender.getAmount() + ". \nPlayer cost: " + amount);
         }
 
         sender.setAmount(sender.getAmount().subtract(amount));
@@ -37,5 +40,14 @@ public class BankAccountServiceImpl implements BankAccountService {
     @Override
     public BankAccount getById(Long id) {
         return bankRepository.getReferenceById(id);
+    }
+
+    @Override
+    public BankAccount createNewBankAccountForTeam() {
+        BankAccount account = new BankAccount();
+        account.setAccountNumber(String.valueOf(ThreadLocalRandom.current().nextInt(100000, 500000)));
+        account.setAmount(BigDecimal.valueOf(ThreadLocalRandom.current().nextLong(400000, 1000000)));
+        bankRepository.save(account);
+        return account;
     }
 }
