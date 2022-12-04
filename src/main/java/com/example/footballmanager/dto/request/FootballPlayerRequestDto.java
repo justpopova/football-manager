@@ -1,8 +1,14 @@
 package com.example.footballmanager.dto.request;
 
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
+
 public class FootballPlayerRequestDto {
+    @NotNull
     private String name;
+    @Min(18)
     private int age;
+    @Min(1)
     private double yearsExperience;
     private Long footballTeamId;
 
