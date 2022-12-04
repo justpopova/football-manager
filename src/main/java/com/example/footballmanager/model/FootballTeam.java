@@ -8,11 +8,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-
 import java.util.List;
 
 @Entity
-@Table(name = "football_team")
+@Table(name = "football_teams")
 public class FootballTeam {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
