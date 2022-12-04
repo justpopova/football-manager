@@ -6,7 +6,9 @@ import com.example.footballmanager.model.FootballPlayer;
 import com.example.footballmanager.model.FootballTeam;
 import com.example.footballmanager.service.BankAccountService;
 import com.example.footballmanager.service.FootballPlayerService;
+
 import java.util.stream.Collectors;
+
 import org.springframework.stereotype.Component;
 
 @Component
@@ -25,11 +27,17 @@ public class FootballTeamDtoMapper implements RequestDtoMapper<FootballTeamReque
     public FootballTeam mapToModel(FootballTeamRequestDto dto) {
         FootballTeam footballTeam = new FootballTeam();
         footballTeam.setName(dto.getName());
-        footballTeam.setBankAccount(bankAccountService.getById(dto.getBankAccountId()));
+        if (dto.getBankAccountId() == null) {
+            footballTeam.setBankAccount(bankAccountService.createNewBankAccountForTeam());
+        } else {
+            footballTeam.setBankAccount(bankAccountService.getById(dto.getBankAccountId()));
+        }
         footballTeam.setCommission(dto.getCommission());
-        footballTeam.setPlayers(dto.getPlayersIds().stream()
-                .map(playerService::getById)
-                .collect(Collectors.toList()));
+        if (dto.getPlayersIds() != null) {
+            footballTeam.setPlayers(dto.getPlayersIds().stream()
+                    .map(playerService::getById)
+                    .collect(Collectors.toList()));
+        }
         return footballTeam;
     }
 
@@ -40,9 +48,11 @@ public class FootballTeamDtoMapper implements RequestDtoMapper<FootballTeamReque
         responseDto.setName(footballTeam.getName());
         responseDto.setBankAccountId(footballTeam.getBankAccount().getId());
         responseDto.setCommission(footballTeam.getCommission());
-        responseDto.setPlayersIds(footballTeam.getPlayers().stream()
-                .map(FootballPlayer::getId)
-                .collect(Collectors.toList()));
+        if (footballTeam.getPlayers() != null) {
+            responseDto.setPlayersIds(footballTeam.getPlayers().stream()
+                    .map(FootballPlayer::getId)
+                    .collect(Collectors.toList()));
+        }
         return responseDto;
     }
 }
