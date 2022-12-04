@@ -5,6 +5,9 @@ import com.example.footballmanager.dto.response.FootballPlayerResponseDto;
 import com.example.footballmanager.mapper.FootballPlayerDtoMapper;
 import com.example.footballmanager.model.FootballPlayer;
 import com.example.footballmanager.service.FootballPlayerService;
+import jakarta.validation.Valid;
+import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/football-players")
+@RequestMapping("/football-player")
 public class FootballPlayerController {
     private final FootballPlayerDtoMapper playerDtoMapper;
     private final FootballPlayerService footballPlayerService;
@@ -27,28 +30,41 @@ public class FootballPlayerController {
     }
 
     @PostMapping
-    public FootballPlayerResponseDto create(@RequestBody FootballPlayerRequestDto dto) {
+    public FootballPlayerResponseDto create(@RequestBody @Valid FootballPlayerRequestDto dto) {
         FootballPlayer player = footballPlayerService.save(playerDtoMapper.mapToModel(dto));
         return playerDtoMapper.mapToDto(player);
     }
 
-    @GetMapping("/get-player-by-id/{id}")
+    @GetMapping("/{id}")
     public FootballPlayerResponseDto getById(@PathVariable Long id) {
         FootballPlayer player = footballPlayerService.getById(id);
         return playerDtoMapper.mapToDto(player);
     }
 
-    @PutMapping("/update-player-by-id/{id}")
+    @PutMapping("/{id}")
     public FootballPlayerResponseDto update(@PathVariable Long id,
                                             @RequestBody FootballPlayerRequestDto dto) {
-        FootballPlayer player = playerDtoMapper.mapToModel(dto);
-        player.setId(id);
-        footballPlayerService.update(player);
+        FootballPlayer player = footballPlayerService.update(id, dto);
         return playerDtoMapper.mapToDto(player);
     }
 
-    @DeleteMapping("/delete-player-by-id/{id}")
+    @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
         footballPlayerService.delete(id);
+    }
+
+    @GetMapping("/players-by-team/{id}")
+    public List<FootballPlayerResponseDto> getPlayersByTeam(@PathVariable(name = "id") Long teamId) {
+        return footballPlayerService.getPlayersByTeam(teamId).stream()
+                .filter(p -> p.getFootballTeam().getId().equals(teamId))
+                .map(playerDtoMapper::mapToDto)
+                .collect(Collectors.toList());
+    }
+
+    @GetMapping("/all-players")
+    public List<FootballPlayerResponseDto> getAllPlayers() {
+        return footballPlayerService.getAll().stream()
+                .map(playerDtoMapper::mapToDto)
+                .collect(Collectors.toList());
     }
 }
