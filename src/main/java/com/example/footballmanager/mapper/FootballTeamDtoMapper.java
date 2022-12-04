@@ -6,9 +6,7 @@ import com.example.footballmanager.model.FootballPlayer;
 import com.example.footballmanager.model.FootballTeam;
 import com.example.footballmanager.service.BankAccountService;
 import com.example.footballmanager.service.FootballPlayerService;
-
 import java.util.stream.Collectors;
-
 import org.springframework.stereotype.Component;
 
 @Component

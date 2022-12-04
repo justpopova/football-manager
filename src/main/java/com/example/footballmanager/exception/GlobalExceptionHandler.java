@@ -1,4 +1,4 @@
-package com.example.footballmanager.controller;
+package com.example.footballmanager.exception;
 
 import com.example.footballmanager.exception.EntityNotFoundException;
 import com.example.footballmanager.exception.FinancialTransactionException;

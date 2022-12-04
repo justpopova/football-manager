@@ -7,6 +7,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.PreRemove;
 import jakarta.persistence.Table;
 import java.util.List;
 
@@ -61,6 +62,11 @@ public class FootballTeam {
 
     public void setCommission(double commission) {
         this.commission = commission;
+    }
+
+    @PreRemove
+    public void clearUpPlayers() {
+        players.forEach(footballPlayer -> footballPlayer.setFootballTeam(null));
     }
 
     @Override

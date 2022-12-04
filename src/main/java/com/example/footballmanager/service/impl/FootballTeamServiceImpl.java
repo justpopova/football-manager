@@ -2,14 +2,12 @@ package com.example.footballmanager.service.impl;
 
 import com.example.footballmanager.dto.request.FootballTeamRequestDto;
 import com.example.footballmanager.exception.EntityNotFoundException;
-import com.example.footballmanager.model.FootballPlayer;
 import com.example.footballmanager.model.FootballTeam;
 import com.example.footballmanager.repository.FootballTeamRepository;
 import com.example.footballmanager.service.BankAccountService;
 import com.example.footballmanager.service.FootballPlayerService;
 import com.example.footballmanager.service.FootballTeamService;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service

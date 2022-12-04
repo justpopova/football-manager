@@ -32,7 +32,9 @@ public class FootballPlayerDtoMapper implements RequestDtoMapper<FootballPlayerR
         responseDto.setName(player.getName());
         responseDto.setAge(player.getAge());
         responseDto.setYearsExperience(player.getYearsExperience());
-        responseDto.setFootballTeamId(player.getFootballTeam().getId());
+        if (player.getFootballTeam() != null) {
+            responseDto.setFootballTeamId(player.getFootballTeam().getId());
+        }
         return responseDto;
     }
 }

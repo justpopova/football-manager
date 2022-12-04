@@ -44,7 +44,7 @@ public class FootballTeamController {
 
     @PutMapping("/{id}")
     public FootballTeamResponseDto update(@PathVariable Long id,
-                                          @RequestBody @Valid FootballTeamRequestDto dto) {
+                                          @RequestBody FootballTeamRequestDto dto) {
         FootballTeam footballTeam = footballTeamService.update(id, dto);
         return teamDtoMapper.mapToDto(footballTeam);
     }
