@@ -59,12 +59,14 @@ public class FootballPlayerServiceImpl implements FootballPlayerService {
             footballPlayer.setFootballTeam(
                     teamRepository.getReferenceById(requestDto.getFootballTeamId()));
         }
-        footballPlayerRepository.save(footballPlayer);
-        return footballPlayer;
+        return footballPlayerRepository.save(footballPlayer);
     }
 
     @Override
     public List<FootballPlayer> getPlayersByTeam(Long id) {
+        if (!teamRepository.existsById(id)) {
+            throw new EntityNotFoundException("Team with id " + id + " doesn't exist");
+        }
         return footballPlayerRepository.getAllByFootballTeamId(id);
     }
 
