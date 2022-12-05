@@ -49,6 +49,10 @@ public class FootballTeamServiceImpl implements FootballTeamService {
 
     @Override
     public FootballTeam update(Long id, FootballTeamRequestDto teamRequestDto) {
+        if (!footballTeamRepository.existsById(id)) {
+            throw new EntityNotFoundException("Team with id " + id + " doesn't exist");
+        }
+
         FootballTeam footballTeam = footballTeamRepository.getReferenceById(id);
         if (teamRequestDto.getName() != null) {
             footballTeam.setName(teamRequestDto.getName());

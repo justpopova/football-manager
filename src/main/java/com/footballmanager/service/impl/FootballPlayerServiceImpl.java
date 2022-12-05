@@ -45,6 +45,9 @@ public class FootballPlayerServiceImpl implements FootballPlayerService {
 
     @Override
     public FootballPlayer update(Long id, FootballPlayerRequestDto requestDto) {
+        if (!footballPlayerRepository.existsById(id)) {
+            throw new EntityNotFoundException("Football player with id " + id + " doesn't exist");
+        }
         FootballPlayer footballPlayer = footballPlayerRepository.getReferenceById(id);
         if (requestDto.getName() != null) {
             footballPlayer.setName(requestDto.getName());
