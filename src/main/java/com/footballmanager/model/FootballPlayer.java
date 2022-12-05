@@ -6,6 +6,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import java.util.Objects;
 
 @Entity
 @Table(name = "football_players")
@@ -18,9 +19,6 @@ public class FootballPlayer {
     private double yearsExperience;
     @ManyToOne
     private FootballTeam footballTeam;
-
-    public FootballPlayer() {
-    }
 
     public Long getId() {
         return id;
@@ -60,6 +58,27 @@ public class FootballPlayer {
 
     public void setFootballTeam(FootballTeam footballTeam) {
         this.footballTeam = footballTeam;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof FootballPlayer)){
+            return false;
+        }
+        FootballPlayer that = (FootballPlayer) o;
+        return getAge() == that.getAge() && Double.compare(that.getYearsExperience(),
+                getYearsExperience()) == 0 && Objects.equals(getId(),
+                that.getId()) && Objects.equals(getName(),
+                that.getName()) && Objects.equals(getFootballTeam(),
+                that.getFootballTeam());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getName(), getAge(), getYearsExperience(), getFootballTeam());
     }
 
     @Override
