@@ -24,8 +24,7 @@ This is simplified system for managing football teams and players.
 **Technologies:**
 
 - Java 17
-- Spring Boot JPA
-- Spring Boot Web
+- Spring Boot
 - H2 database
 - Maven
 
