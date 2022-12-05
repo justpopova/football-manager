@@ -10,6 +10,7 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.PreRemove;
 import jakarta.persistence.Table;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "football_teams")
@@ -67,6 +68,26 @@ public class FootballTeam {
     @PreRemove
     public void clearUpPlayers() {
         players.forEach(footballPlayer -> footballPlayer.setFootballTeam(null));
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof FootballTeam that)) {
+            return false;
+        }
+        return Double.compare(that.getCommission(), getCommission()) == 0
+                && Objects.equals(getId(), that.getId())
+                && Objects.equals(getName(), that.getName())
+                && Objects.equals(getPlayers(), that.getPlayers())
+                && Objects.equals(getBankAccount(), that.getBankAccount());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getName(), getPlayers(), getBankAccount(), getCommission());
     }
 
     @Override
