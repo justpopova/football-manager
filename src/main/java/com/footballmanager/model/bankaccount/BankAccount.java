@@ -1,5 +1,6 @@
 package com.footballmanager.model.bankaccount;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -13,6 +14,7 @@ public class BankAccount {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name = "account_number")
     private String accountNumber;
     private BigDecimal amount;
 

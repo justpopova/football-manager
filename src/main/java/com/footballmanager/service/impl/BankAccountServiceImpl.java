@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class BankAccountServiceImpl implements BankAccountService {
-
     private final BankAccountRepository bankRepository;
 
     public BankAccountServiceImpl(BankAccountRepository bankRepository) {

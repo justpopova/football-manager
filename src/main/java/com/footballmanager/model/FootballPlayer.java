@@ -1,9 +1,11 @@
 package com.footballmanager.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.util.Objects;
@@ -16,8 +18,10 @@ public class FootballPlayer {
     private Long id;
     private String name;
     private int age;
-    private double yearsExperience;
+    @Column(name = "years_experience")
+    private int yearsExperience;
     @ManyToOne
+    @JoinColumn(name = "football_team")
     private FootballTeam footballTeam;
 
     public Long getId() {
@@ -44,11 +48,11 @@ public class FootballPlayer {
         this.age = age;
     }
 
-    public double getYearsExperience() {
+    public int getYearsExperience() {
         return yearsExperience;
     }
 
-    public void setYearsExperience(double yearsExperience) {
+    public void setYearsExperience(int yearsExperience) {
         this.yearsExperience = yearsExperience;
     }
 

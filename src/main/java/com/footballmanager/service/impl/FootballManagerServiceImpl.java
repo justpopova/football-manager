@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class FootballManagerServiceImpl implements FootballManagerService {
-
     private static final int YEAR_IN_MONTHS = 12;
     private static final int BASE_PRICE = 100000;
     private final BankAccountService bankAccountService;

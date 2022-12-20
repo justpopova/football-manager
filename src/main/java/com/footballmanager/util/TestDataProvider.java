@@ -25,7 +25,7 @@ public class TestDataProvider {
         FootballPlayer player1 = new FootballPlayer();
         player1.setName("Greg");
         player1.setAge(32);
-        player1.setYearsExperience(5.2);
+        player1.setYearsExperience(5);
         footballPlayerService.save(player1);
 
         FootballPlayer player2 = new FootballPlayer();

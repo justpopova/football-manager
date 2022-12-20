@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class FootballTeamServiceImpl implements FootballTeamService {
-
     private final FootballPlayerService playerService;
     private final FootballTeamRepository footballTeamRepository;
     private final BankAccountService bankAccountService;

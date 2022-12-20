@@ -9,7 +9,7 @@ public class FootballPlayerRequestDto {
     @Min(18)
     private int age;
     @Min(1)
-    private double yearsExperience;
+    private int yearsExperience;
     private Long footballTeamId;
 
     public String getName() {
@@ -28,11 +28,11 @@ public class FootballPlayerRequestDto {
         this.age = age;
     }
 
-    public double getYearsExperience() {
+    public int getYearsExperience() {
         return yearsExperience;
     }
 
-    public void setYearsExperience(double yearsExperience) {
+    public void setYearsExperience(int yearsExperience) {
         this.yearsExperience = yearsExperience;
     }
 

@@ -4,7 +4,7 @@ public class FootballPlayerResponseDto {
     private Long id;
     private String name;
     private int age;
-    private double yearsExperience;
+    private int yearsExperience;
     private Long footballTeamId;
 
     public Long getId() {
@@ -31,11 +31,11 @@ public class FootballPlayerResponseDto {
         this.age = age;
     }
 
-    public double getYearsExperience() {
+    public int getYearsExperience() {
         return yearsExperience;
     }
 
-    public void setYearsExperience(double yearsExperience) {
+    public void setYearsExperience(int yearsExperience) {
         this.yearsExperience = yearsExperience;
     }
 
