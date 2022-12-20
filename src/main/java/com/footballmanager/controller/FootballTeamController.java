@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/football-team")
+@RequestMapping("/football-teams")
 public class FootballTeamController {
 
     private final FootballTeamDtoMapper teamDtoMapper;
@@ -54,7 +54,7 @@ public class FootballTeamController {
         footballTeamService.delete(id);
     }
 
-    @GetMapping("/teams")
+    @GetMapping
     public List<FootballTeamResponseDto> getAll() {
         List<FootballTeamResponseDto> teams = footballTeamService.getAll().stream()
                 .map(teamDtoMapper::mapToDto)

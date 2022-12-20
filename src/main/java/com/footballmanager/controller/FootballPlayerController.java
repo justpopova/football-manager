@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -53,16 +54,16 @@ public class FootballPlayerController {
         footballPlayerService.delete(id);
     }
 
-    @GetMapping("/players-by-team/{id}")
+    @GetMapping("/by-team/{team-id}")
     public List<FootballPlayerResponseDto> getPlayersByTeam(
-            @PathVariable(name = "id") Long teamId) {
+            @RequestParam(name = "team-id") Long teamId) {
         return footballPlayerService.getPlayersByTeam(teamId).stream()
                 .filter(p -> p.getFootballTeam().getId().equals(teamId))
                 .map(playerDtoMapper::mapToDto)
                 .collect(Collectors.toList());
     }
 
-    @GetMapping("/all-players")
+    @GetMapping
     public List<FootballPlayerResponseDto> getAllPlayers() {
         return footballPlayerService.getAll().stream()
                 .map(playerDtoMapper::mapToDto)
