@@ -1,14 +1,11 @@
 package com.footballmanager.dto.request;
 
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
-
 import java.time.LocalDate;
 
 public class FootballPlayerRequestDto {
     @NotNull
     private String name;
-    @Min(18)
     private LocalDate age;
     @NotNull
     private LocalDate yearsExperience;
