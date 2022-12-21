@@ -7,12 +7,14 @@ import com.footballmanager.service.FootballManagerService;
 import com.footballmanager.service.FootballPlayerService;
 import com.footballmanager.service.FootballTeamService;
 import java.math.BigDecimal;
+import java.time.LocalDate;
+
 import org.springframework.stereotype.Service;
 
 @Service
 public class FootballManagerServiceImpl implements FootballManagerService {
     private static final int YEAR_IN_MONTHS = 12;
-    private static final int BASE_PRICE = 100000;
+    private static final BigDecimal BASE_PRICE = BigDecimal.valueOf(100000.0);
     private final BankAccountService bankAccountService;
     private final FootballTeamService footballTeamService;
     private final FootballPlayerService playerService;
@@ -27,7 +29,7 @@ public class FootballManagerServiceImpl implements FootballManagerService {
 
     @Override
     public FootballPlayer transferPlayerToAnotherTeam(Long playerId, Long transferToTeamId) {
-        FootballPlayer player = playerService.getById(playerId);
+        FootballPlayer player = playerService.getAllByIds(playerId);
         if (player.getFootballTeam() == null) {
             player.setFootballTeam(footballTeamService.getById(transferToTeamId));
             playerService.save(player);
@@ -37,18 +39,21 @@ public class FootballManagerServiceImpl implements FootballManagerService {
         BankAccount sender = footballTeamService.getById(transferToTeamId).getBankAccount();
         BankAccount receiver = player.getFootballTeam().getBankAccount();
 
-        bankAccountService.transfer(sender, receiver,
-                BigDecimal.valueOf(countTransferExpenses(player)));
+        bankAccountService.transfer(sender, receiver,countTransferExpenses(player));
 
         player.setFootballTeam(footballTeamService.getById(transferToTeamId));
         playerService.save(player);
         return player;
     }
 
-    private double countTransferExpenses(FootballPlayer player) {
-        double transferCost = (player.getYearsExperience() * YEAR_IN_MONTHS)
-                * BASE_PRICE / player.getAge();
-        double commissionPrice = transferCost * player.getFootballTeam().getCommission();
-        return transferCost + commissionPrice;
+    private BigDecimal countTransferExpenses(FootballPlayer player) {
+        LocalDate yearsExperience = LocalDate.now().minusYears(player.getYearsExperience().getYear());
+
+        int experienceInMonths = (yearsExperience.getYear() * YEAR_IN_MONTHS) + yearsExperience.getMonthValue();
+
+        LocalDate playerAge = LocalDate.now().minusYears(player.getAge().getYear());
+        BigDecimal transferCost = BASE_PRICE.multiply(BigDecimal.valueOf(experienceInMonths)).divide(BigDecimal.valueOf(playerAge.getYear()));
+        BigDecimal commissionPrice = transferCost.multiply(player.getFootballTeam().getCommission());
+        return transferCost.add(commissionPrice);
     }
 }
