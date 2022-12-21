@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/football-teams")
 public class FootballTeamController {
-
     private final FootballTeamDtoMapper teamDtoMapper;
     private final FootballTeamService footballTeamService;
 
@@ -56,9 +55,8 @@ public class FootballTeamController {
 
     @GetMapping
     public List<FootballTeamResponseDto> getAll() {
-        List<FootballTeamResponseDto> teams = footballTeamService.getAll().stream()
+        return footballTeamService.getAll().stream()
                 .map(teamDtoMapper::mapToDto)
                 .collect(Collectors.toList());
-        return teams;
     }
 }
