@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface FootballPlayerRepository extends JpaRepository<FootballPlayer, Long> {
-    List<FootballPlayer> getAllByFootballTeamId(Long id);
+    List<FootballPlayer> getAllByFootballTeamId(Long teamId);
 }

@@ -26,7 +26,7 @@ public class FootballPlayerServiceImpl implements FootballPlayerService {
     }
 
     @Override
-    public FootballPlayer getById(Long id) {
+    public FootballPlayer getAllByIds(Long id) {
         if (!footballPlayerRepository.existsById(id)) {
             throw new EntityNotFoundException("Don't have football player with id: " + id);
         }
@@ -34,7 +34,7 @@ public class FootballPlayerServiceImpl implements FootballPlayerService {
     }
 
     @Override
-    public List<FootballPlayer> getById(List<Long> id) {
+    public List<FootballPlayer> getAllByIds(List<Long> id) {
         return footballPlayerRepository.findAllById(id);
     }
 
@@ -52,10 +52,10 @@ public class FootballPlayerServiceImpl implements FootballPlayerService {
         if (requestDto.getName() != null) {
             footballPlayer.setName(requestDto.getName());
         }
-        if (requestDto.getAge() != 0) {
+        if (requestDto.getAge() != null) {
             footballPlayer.setAge(requestDto.getAge());
         }
-        if (requestDto.getYearsExperience() != 0.0) {
+        if (requestDto.getYearsExperience() != null) {
             footballPlayer.setYearsExperience(requestDto.getYearsExperience());
         }
         if (requestDto.getFootballTeamId() != null) {

@@ -7,9 +7,9 @@ import java.util.List;
 public interface FootballPlayerService {
     FootballPlayer save(FootballPlayer footballTeam);
 
-    FootballPlayer getById(Long id);
+    FootballPlayer getAllByIds(Long id);
 
-    List<FootballPlayer> getById(List<Long> ids);
+    List<FootballPlayer> getAllByIds(List<Long> ids);
 
     void delete(Long id);
 
