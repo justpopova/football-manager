@@ -8,6 +8,8 @@ import com.footballmanager.service.BankAccountService;
 import com.footballmanager.service.FootballPlayerService;
 import com.footballmanager.service.FootballTeamService;
 import java.util.List;
+
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -24,10 +26,13 @@ public class FootballTeamServiceImpl implements FootballTeamService {
         this.bankAccountService = bankAccountService;
     }
 
+    @Transactional
     @Override
     public FootballTeam save(FootballTeam footballTeam) {
         if (footballTeam.getBankAccount() == null) {
             footballTeam.setBankAccount(bankAccountService.createNewBankAccountForTeam());
+            if (footballTeam.getName().equals("Testing"))
+                throw new RuntimeException("Transaction was rolled back");
             return footballTeamRepository.save(footballTeam);
         }
         return footballTeamRepository.save(footballTeam);
@@ -57,13 +62,13 @@ public class FootballTeamServiceImpl implements FootballTeamService {
             footballTeam.setName(teamRequestDto.getName());
         }
         if (teamRequestDto.getPlayersIds() != null && !teamRequestDto.getPlayersIds().isEmpty()) {
-            footballTeam.setPlayers(playerService.getById(teamRequestDto.getPlayersIds()));
+            footballTeam.setPlayers(playerService.getAllByIds(teamRequestDto.getPlayersIds()));
         }
         if (teamRequestDto.getBankAccountId() != null) {
             footballTeam.setBankAccount(
                     bankAccountService.getById(teamRequestDto.getBankAccountId()));
         }
-        if (teamRequestDto.getCommission() != 0.0) {
+        if (teamRequestDto.getCommission() != null) {
             footballTeam.setCommission(teamRequestDto.getCommission());
         }
         footballTeamRepository.save(footballTeam);

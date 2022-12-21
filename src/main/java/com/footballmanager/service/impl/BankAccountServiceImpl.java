@@ -6,8 +6,8 @@ import com.footballmanager.repository.BankAccountRepository;
 import com.footballmanager.service.BankAccountService;
 import java.math.BigDecimal;
 import java.util.concurrent.ThreadLocalRandom;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class BankAccountServiceImpl implements BankAccountService {
