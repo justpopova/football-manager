@@ -6,7 +6,6 @@ import com.footballmanager.service.FootballManagerService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -21,9 +20,9 @@ public class TransferPlayersController {
         this.playerDtoMapper = playerDtoMapper;
     }
 
-    @GetMapping("/{playerId}")
-    public FootballPlayerResponseDto transferPLayer(@PathVariable Long playerId,
-                                                    @RequestParam Long footballTeamId) {
+    @GetMapping("/player-id/{player-id}/team-id/{team-id}")
+    public FootballPlayerResponseDto transferPLayer(@PathVariable(name = "player-id") Long playerId,
+                                                    @PathVariable(name = "team-id") Long footballTeamId) {
         return playerDtoMapper.mapToDto(
                 managerService.transferPlayerToAnotherTeam(playerId, footballTeamId));
     }
