@@ -1,10 +1,12 @@
 package com.footballmanager.dto.response;
 
+import java.time.LocalDate;
+
 public class FootballPlayerResponseDto {
     private Long id;
     private String name;
-    private int age;
-    private int yearsExperience;
+    private LocalDate age;
+    private LocalDate yearsExperience;
     private Long footballTeamId;
 
     public Long getId() {
@@ -23,19 +25,19 @@ public class FootballPlayerResponseDto {
         this.name = name;
     }
 
-    public int getAge() {
+    public LocalDate getAge() {
         return age;
     }
 
-    public void setAge(int age) {
+    public void setAge(LocalDate age) {
         this.age = age;
     }
 
-    public int getYearsExperience() {
+    public LocalDate getYearsExperience() {
         return yearsExperience;
     }
 
-    public void setYearsExperience(int yearsExperience) {
+    public void setYearsExperience(LocalDate yearsExperience) {
         this.yearsExperience = yearsExperience;
     }
 

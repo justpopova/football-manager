@@ -8,6 +8,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
@@ -17,9 +20,9 @@ public class FootballPlayer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private int age;
+    private LocalDate age;
     @Column(name = "years_experience")
-    private int yearsExperience;
+    private LocalDate yearsExperience;
     @ManyToOne
     @JoinColumn(name = "football_team")
     private FootballTeam footballTeam;
@@ -40,19 +43,19 @@ public class FootballPlayer {
         this.name = name;
     }
 
-    public int getAge() {
+    public LocalDate getAge() {
         return age;
     }
 
-    public void setAge(int age) {
+    public void setAge(LocalDate age) {
         this.age = age;
     }
 
-    public int getYearsExperience() {
+    public LocalDate getYearsExperience() {
         return yearsExperience;
     }
 
-    public void setYearsExperience(int yearsExperience) {
+    public void setYearsExperience(LocalDate yearsExperience) {
         this.yearsExperience = yearsExperience;
     }
 
@@ -66,18 +69,14 @@ public class FootballPlayer {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof FootballPlayer)){
-            return false;
-        }
+        if (this == o) return true;
+        if (!(o instanceof FootballPlayer)) return false;
         FootballPlayer that = (FootballPlayer) o;
-        return getAge() == that.getAge() && Double.compare(that.getYearsExperience(),
-                getYearsExperience()) == 0 && Objects.equals(getId(),
-                that.getId()) && Objects.equals(getName(),
-                that.getName()) && Objects.equals(getFootballTeam(),
-                that.getFootballTeam());
+        return Objects.equals(getId(), that.getId())
+                && Objects.equals(getName(), that.getName())
+                && Objects.equals(getAge(), that.getAge())
+                && Objects.equals(getYearsExperience(), that.getYearsExperience())
+                && Objects.equals(getFootballTeam(), that.getFootballTeam());
     }
 
     @Override

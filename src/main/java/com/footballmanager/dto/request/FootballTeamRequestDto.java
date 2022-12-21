@@ -3,6 +3,8 @@ package com.footballmanager.dto.request;
 import jakarta.validation.constraints.DecimalMax;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotNull;
+
+import java.math.BigDecimal;
 import java.util.List;
 
 public class FootballTeamRequestDto {
@@ -11,7 +13,7 @@ public class FootballTeamRequestDto {
     private List<Long> playersIds;
     private Long bankAccountId;
     @DecimalMin("0.0") @DecimalMax("0.1")
-    private double commission;
+    private BigDecimal commission;
 
     public String getName() {
         return name;
@@ -37,11 +39,11 @@ public class FootballTeamRequestDto {
         this.bankAccountId = bankAccountId;
     }
 
-    public double getCommission() {
+    public BigDecimal getCommission() {
         return commission;
     }
 
-    public void setCommission(double commission) {
+    public void setCommission(BigDecimal commission) {
         this.commission = commission;
     }
 }

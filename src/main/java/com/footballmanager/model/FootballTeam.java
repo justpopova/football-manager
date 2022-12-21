@@ -12,6 +12,7 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.PreRemove;
 import jakarta.persistence.Table;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
 
@@ -27,7 +28,7 @@ public class FootballTeam {
     @OneToOne
     @JoinColumn(name = "bank_account")
     private BankAccount bankAccount;
-    private double commission;
+    private BigDecimal commission;
 
     public Long getId() {
         return id;
@@ -61,11 +62,11 @@ public class FootballTeam {
         this.bankAccount = bankAccount;
     }
 
-    public double getCommission() {
+    public BigDecimal getCommission() {
         return commission;
     }
 
-    public void setCommission(double commission) {
+    public void setCommission(BigDecimal commission) {
         this.commission = commission;
     }
 
@@ -76,17 +77,14 @@ public class FootballTeam {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof FootballTeam that)) {
-            return false;
-        }
-        return Double.compare(that.getCommission(), getCommission()) == 0
-                && Objects.equals(getId(), that.getId())
+        if (this == o) return true;
+        if (!(o instanceof FootballTeam)) return false;
+        FootballTeam that = (FootballTeam) o;
+        return Objects.equals(getId(), that.getId())
                 && Objects.equals(getName(), that.getName())
                 && Objects.equals(getPlayers(), that.getPlayers())
-                && Objects.equals(getBankAccount(), that.getBankAccount());
+                && Objects.equals(getBankAccount(), that.getBankAccount())
+                && Objects.equals(getCommission(), that.getCommission());
     }
 
     @Override

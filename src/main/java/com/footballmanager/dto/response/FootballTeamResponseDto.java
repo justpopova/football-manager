@@ -1,5 +1,6 @@
 package com.footballmanager.dto.response;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public class FootballTeamResponseDto {
@@ -7,7 +8,7 @@ public class FootballTeamResponseDto {
     private String name;
     private List<Long> playersIds;
     private Long bankAccountId;
-    private double commission;
+    private BigDecimal commission;
 
     public Long getId() {
         return id;
@@ -41,11 +42,11 @@ public class FootballTeamResponseDto {
         this.bankAccountId = bankAccountId;
     }
 
-    public double getCommission() {
+    public BigDecimal getCommission() {
         return commission;
     }
 
-    public void setCommission(double commission) {
+    public void setCommission(BigDecimal commission) {
         this.commission = commission;
     }
 }
