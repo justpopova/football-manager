@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/football-player")
+@RequestMapping("/football-players")
 public class FootballPlayerController {
     private final FootballPlayerDtoMapper playerDtoMapper;
     private final FootballPlayerService footballPlayerService;
@@ -38,7 +38,7 @@ public class FootballPlayerController {
 
     @GetMapping("/{id}")
     public FootballPlayerResponseDto getById(@PathVariable Long id) {
-        FootballPlayer player = footballPlayerService.getById(id);
+        FootballPlayer player = footballPlayerService.getAllByIds(id);
         return playerDtoMapper.mapToDto(player);
     }
 
@@ -54,7 +54,7 @@ public class FootballPlayerController {
         footballPlayerService.delete(id);
     }
 
-    @GetMapping("/by-team/{team-id}")
+    @GetMapping("/by-team")
     public List<FootballPlayerResponseDto> getPlayersByTeam(
             @RequestParam(name = "team-id") Long teamId) {
         return footballPlayerService.getPlayersByTeam(teamId).stream()
