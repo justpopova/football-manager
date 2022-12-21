@@ -7,9 +7,8 @@ import com.footballmanager.repository.FootballTeamRepository;
 import com.footballmanager.service.BankAccountService;
 import com.footballmanager.service.FootballPlayerService;
 import com.footballmanager.service.FootballTeamService;
-import java.util.List;
-
 import jakarta.transaction.Transactional;
+import java.util.List;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -26,13 +25,11 @@ public class FootballTeamServiceImpl implements FootballTeamService {
         this.bankAccountService = bankAccountService;
     }
 
-    @Transactional
     @Override
+    @Transactional
     public FootballTeam save(FootballTeam footballTeam) {
         if (footballTeam.getBankAccount() == null) {
             footballTeam.setBankAccount(bankAccountService.createNewBankAccountForTeam());
-            if (footballTeam.getName().equals("Testing"))
-                throw new RuntimeException("Transaction was rolled back");
             return footballTeamRepository.save(footballTeam);
         }
         return footballTeamRepository.save(footballTeam);
