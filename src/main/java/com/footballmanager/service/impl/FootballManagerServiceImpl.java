@@ -7,8 +7,9 @@ import com.footballmanager.service.FootballManagerService;
 import com.footballmanager.service.FootballPlayerService;
 import com.footballmanager.service.FootballTeamService;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
-
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -28,6 +29,7 @@ public class FootballManagerServiceImpl implements FootballManagerService {
     }
 
     @Override
+    @Transactional
     public FootballPlayer transferPlayerToAnotherTeam(Long playerId, Long transferToTeamId) {
         FootballPlayer player = playerService.getAllByIds(playerId);
         if (player.getFootballTeam() == null) {
@@ -52,7 +54,8 @@ public class FootballManagerServiceImpl implements FootballManagerService {
         int experienceInMonths = (yearsExperience.getYear() * YEAR_IN_MONTHS) + yearsExperience.getMonthValue();
 
         LocalDate playerAge = LocalDate.now().minusYears(player.getAge().getYear());
-        BigDecimal transferCost = BASE_PRICE.multiply(BigDecimal.valueOf(experienceInMonths)).divide(BigDecimal.valueOf(playerAge.getYear()));
+        BigDecimal transferCost = BASE_PRICE.multiply(BigDecimal.valueOf(experienceInMonths))
+                .divide(BigDecimal.valueOf(playerAge.getYear()), RoundingMode.FLOOR);
         BigDecimal commissionPrice = transferCost.multiply(player.getFootballTeam().getCommission());
         return transferCost.add(commissionPrice);
     }
