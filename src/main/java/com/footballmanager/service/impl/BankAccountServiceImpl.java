@@ -11,6 +11,10 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class BankAccountServiceImpl implements BankAccountService {
+    private static final int MIN_ACCOUNT_NUMBER = 100000;
+    private static final int MAX_ACCOUNT_NUMBER = 500000;
+    private static final int MIN_ACCOUNT_AMOUNT = 400000;
+    private static final int MAX_ACCOUNT_AMOUNT = 1000000;
     private final BankAccountRepository bankRepository;
 
     public BankAccountServiceImpl(BankAccountRepository bankRepository) {
@@ -45,9 +49,9 @@ public class BankAccountServiceImpl implements BankAccountService {
     public BankAccount createNewBankAccountForTeam() {
         BankAccount account = new BankAccount();
         account.setAccountNumber(String.valueOf(
-                ThreadLocalRandom.current().nextInt(100000, 500000)));
+                ThreadLocalRandom.current().nextInt(MIN_ACCOUNT_NUMBER, MAX_ACCOUNT_NUMBER)));
         account.setAmount(BigDecimal.valueOf(
-                ThreadLocalRandom.current().nextLong(400000, 1000000)));
+                ThreadLocalRandom.current().nextLong(MIN_ACCOUNT_AMOUNT, MAX_ACCOUNT_AMOUNT)));
         bankRepository.save(account);
         return account;
     }
